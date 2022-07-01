@@ -1,14 +1,57 @@
-# raspi 3d scanner control center
+# Raspi 3d Scanner Control Center
 
-server installation on raspberry pi
-raspi 4B/2G OS lite bullseye 22.04
+## Server 
+
+A server is hosting Anvil app that serve control interface through standard http protocol\
+so you can send command from any device in the same network. \
+It can be connected to local network via ethernet or wifi. \
+Static IP is optional.\
+\
+It can be Raspi or a Linux/Windows PC \
+I have not tested it on Mac, but Anvil also supports MacOS so it should work. \
+\
+Server will issue command via multicast message. \
+It has time out of 10 seconds to receive responses. \
+But it actually does not react to responses, just send and forget for now. \
+\
+After shooting, camera nodes will **not** automatically send photos back. \
+You will need to manually `get` or `getall` photos from each camera nodes.\
+This is to minimize waiting time between shots,\
+as you don't need to wait for all photos to be sent to the server before taking another.\
+\
+Photos will stay in each camera nodes until `cleanup` command is issued. \
+\
+Photos will be found in `smb://server/Share/photo` \
+\
+For previewing photos, \
+a gallery of small thumbnails can be generated manually using Sigal python module. \
+Gallery is a local static html page in `smb://server/Share/_build/index.html` <br>
+You can open it from file browser, not the web browser, as Anvil does not serve this folder though http \
+You may set up Apache and serve this folder to be able to access this gallery from web browser.
+
+## Camera Node
+
+A camera node runs a single `receiver.py` script that waits for multicast command. \
+It uses the new `libcamera` to shoot. It should be compatible with wide range of cameras. \
+It might work with many USB cameras connected to a single pi with a few lines of code modification. \
+\
+Camera node does not need static IP, does not need to know the server's IP \
+It will respond to message come through multicast group. \
+It gets server's IP from the message,  and can send the photo back to that server. \
+So you could have many servers in the network, just for redundant.
+
+## Server Installation
+
+Development server is\
+Raspi 4B/2G RaspiOS lite bullseye 22.04 \
+Server should be connected to the internet for initial setup to go through.
 ```
 sudo apt update
 sudo apt upgrade
 sudo apt install python3-pip samba
 ```
-edit /etc/samba/smb.conf to add Share folder
-assumed /home/pi/Share
+edit `/etc/samba/smb.conf` to add Share folder\
+assumed `/home/pi/Share`
 
 ```
 [Share]
@@ -24,12 +67,16 @@ restart samba service
 ```
 sudo systemctl restart smbd.service
 ```
-copy project files to Share
+confirm that you can access samba share on the server `smb://server/Share` \
+and guest user have read/write access to this folder. \
+\
+copy or clone this repository to Share
 ```
 cd /home/pi/Share
+git clone https://github.com/boyleo/pi3dscanner.git .
 ```
-install dependencies 
-pysmb might not be needed
+then install dependencies \
+`pysmb` might not be needed
 
 ```
 pip install pysmb anvil-app-server anvil-uplink
@@ -37,10 +84,10 @@ sudo apt install openjdk-8-jdk
 ```
 ***
 
-## Manual start
+### Manual start
 
-start anvil server
-first run will download required jar package
+start anvil server\
+first run will take some time as it will download required jar package
 ```
 anvil-app-server --config-file config.yaml &
 ```
@@ -48,15 +95,15 @@ start sender script
 ```
 python sender.py &
 ```
-open http://server:3030 to access UI
+open `http://server:3030` to access UI
 
 ***
 
-## Image Gallery
+### Image Gallery
 
-install sigal to generate preview gallery.
-gallery can be access at Share/_build/index.html
-you may need libopenjp2-7 - install with apt
+install sigal to generate preview gallery.\
+gallery can be access at `smb://server/Share/_build/index.html` \
+you may need `libopenjp2-7` - install with apt
 ```
 pip install sigal
 ```
@@ -66,8 +113,8 @@ sigal build
 ```
 ***
 
-## Configure services
-create /etc/systemd/system/anvil-app.service
+### Configure services
+create `/etc/systemd/system/anvil-app.service`
 ```
 [Unit]
 Description=Anvil 3D Scanner Control Center
@@ -91,9 +138,9 @@ sudo chmod 644 /etc/systemd/system/anvil-app.service
 sudo systemctl enable anvil-app.service
 sudo systemctl start anvil-app.service
 ```
-also start sender.py as a service
-create /etc/systemd/system/sender.service
-use ExecStartPre to wait for anvil server to be ready
+also start `sender.py` as a service \
+create `/etc/systemd/system/sender.service` \
+use ExecStartPre to probe port 3030 and wait for anvil server to be ready
 ```
 [Unit]
 Description=Send multicast command
