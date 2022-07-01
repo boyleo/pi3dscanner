@@ -1,0 +1,44 @@
+container:
+  type: ColumnPanel
+  properties: {col_widths: '{}'}
+components:
+- type: ColumnPanel
+  properties: {role: card, col_widths: '{"YCOAPF":20,"EPBRSK":40,"KHAEKQ":10,"SISXSA":50}'}
+  name: card_1
+  layout_properties: {grid_position: 'FBYHFS,ASWKIB'}
+  components:
+  - type: Label
+    properties: {}
+    name: Name
+    layout_properties: {grid_position: 'ZCJIUD,YCOAPF JRTWZF,CACUMG'}
+    data_bindings:
+    - {property: text, code: 'self.item[''Person''][''Name'']'}
+  - type: Label
+    properties: {}
+    name: timestamp
+    layout_properties: {grid_position: 'ZCJIUD,YCOAPF WCWBIL,MSMHVI'}
+    data_bindings:
+    - {property: text, code: 'self.item[''Time Stamp'']'}
+  - type: Image
+    properties: {role: null, vertical_align: center, height: '200', tooltip: '', border: '',
+      foreground: '', visible: true, display_mode: shrink_to_fit, spacing_above: small,
+      source: '', spacing_below: small, background: '', horizontal_align: center}
+    name: photo_placeholder
+    layout_properties: {grid_position: 'ZCJIUD,EPBRSK'}
+    data_bindings:
+    - {property: source, code: 'self.item[''URL'']'}
+  - type: Label
+    properties: {role: null, align: left, tooltip: '', border: '', foreground: '',
+      visible: true, text: 'full res :', font_size: null, font: '', spacing_above: small,
+      icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
+      underline: false, icon: ''}
+    name: label_1
+    layout_properties: {grid_position: 'SCWILC,KHAEKQ'}
+  - type: Link
+    properties: {}
+    name: link_1
+    layout_properties: {grid_position: 'SCWILC,SISXSA'}
+    data_bindings:
+    - {property: text, code: 'self.item[''URL'']'}
+    - {property: url, code: 'self.item[''URL'']'}
+is_package: true

@@ -127,3 +127,12 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Anvil
+.anvil-data/
+
+# Sigal output folder
+_build/
+
+# photo folder
+photo/

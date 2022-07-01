@@ -1,0 +1,102 @@
+is_package: true
+container:
+  type: HtmlTemplate
+  properties: {html: '@theme:standard-page.html'}
+  event_bindings: {}
+components:
+- type: ColumnPanel
+  properties: {col_widths: '{"UNMPEK":15,"XYYBNI":20,"QINMWP":15,"ANBKUL":25}'}
+  name: content_panel
+  layout_properties: {slot: default}
+  components:
+  - type: Button
+    properties: {role: primary-color, align: center, tooltip: '', border: '', enabled: true,
+      foreground: '', visible: true, text: SHOOT, font_size: null, font: '', spacing_above: small,
+      icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
+      underline: false, icon: 'fa:camera'}
+    name: bt_Shoot
+    layout_properties: {grid_position: 'KTQYPA,WJEAWQ'}
+    event_bindings: {click: primary_color_1_click}
+  - type: Button
+    properties: {role: null, align: center, tooltip: '', border: '', enabled: true,
+      foreground: '', visible: true, text: GET, font_size: null, font: '', spacing_above: small,
+      icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
+      underline: false, icon: 'fa:download'}
+    name: bt_get
+    layout_properties: {grid_position: 'BFXOUO,KINKVM'}
+    event_bindings: {click: bt_get_click}
+  - type: Button
+    properties: {role: null, align: center, tooltip: '', border: '', enabled: true,
+      foreground: '', visible: true, text: GET ALL, font_size: null, font: '', spacing_above: small,
+      icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
+      underline: false, icon: 'fa:cloud-download'}
+    name: bt_GetAll
+    layout_properties: {grid_position: 'VMUWZX,AVTJVR'}
+    event_bindings: {click: bt_GetAll_click}
+  - type: Spacer
+    properties: {height: 57}
+    name: spacer_3
+    layout_properties: {grid_position: 'NPFSQM,WLLEUX'}
+  - type: Button
+    properties: {role: null, align: center, tooltip: delete photos on each client,
+      border: '', enabled: true, foreground: '', visible: true, text: CLEAN UP, font_size: null,
+      font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false,
+      background: '', bold: false, underline: false, icon: 'fa:trash'}
+    name: bt_Cleanup
+    layout_properties: {grid_position: 'UHOPVM,UNMPEK'}
+    event_bindings: {click: bt_Cleanup_click}
+  - type: Button
+    properties: {role: null, align: center, tooltip: update client's firmware, border: '',
+      enabled: true, foreground: '', visible: true, text: UPDATE CLIENTS, font_size: null,
+      font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false,
+      background: '', bold: false, underline: false, icon: 'fa:upload'}
+    name: bt_update
+    layout_properties: {grid_position: 'EIVIDL,SVTFUR'}
+    event_bindings: {click: bt_update_click}
+  - type: Button
+    properties: {role: null, align: center, tooltip: '', border: '', enabled: true,
+      foreground: '', visible: true, text: STOP CLIENT, font_size: null, font: '',
+      spacing_above: small, icon_align: left, spacing_below: small, italic: false,
+      background: '', bold: false, underline: false, icon: 'fa:ban'}
+    name: bt_Stop
+    layout_properties: {grid_position: 'ULQCKX,CVDOKA'}
+    event_bindings: {click: bt_Stop_click}
+  - type: Button
+    properties: {role: null, align: center, tooltip: shutdown clients, border: '',
+      enabled: true, foreground: '', visible: true, text: SHUTDOWN CLIENTS, font_size: null,
+      font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false,
+      background: '', bold: false, underline: false, icon: 'fa:bed'}
+    name: bt_Shutdown
+    layout_properties: {grid_position: 'XQQRGS,LHNFEP'}
+    event_bindings: {click: bt_Shutdown_click}
+  - type: Label
+    properties: {role: null, align: left, tooltip: '', border: '', foreground: '',
+      visible: true, text: 'Custom command :', font_size: null, font: '', spacing_above: small,
+      icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
+      underline: false, icon: ''}
+    name: label_2
+    layout_properties: {grid_position: 'LUOBBL,XYYBNI'}
+  - type: TextBox
+    properties: {}
+    name: command_box
+    layout_properties: {grid_position: 'LUOBBL,QINMWP'}
+    event_bindings: {pressed_enter: text_custom_pressed_enter}
+  - type: Button
+    properties: {role: null, align: left, tooltip: '', border: '', enabled: true,
+      foreground: '', visible: true, text: SEND, font_size: null, font: '', spacing_above: small,
+      icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
+      underline: false, icon: 'fa:bullhorn'}
+    name: bt_Send
+    layout_properties: {grid_position: 'LUOBBL,ANBKUL'}
+    event_bindings: {click: bt_send_click}
+- type: FlowPanel
+  properties: {}
+  name: navbar_links
+  layout_properties: {slot: nav-right}
+- type: Label
+  properties: {role: headline, align: left, tooltip: '', border: '', foreground: '',
+    visible: true, text: 3D Scanner Control Center, font_size: null, font: '', spacing_above: small,
+    icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
+    underline: false, icon: ''}
+  name: label_1
+  layout_properties: {slot: title}

@@ -1,0 +1,43 @@
+services:
+- source: /runtime/services/tables.yml
+  client_config: {}
+  server_config: {}
+startup: {type: form, module: Command}
+package_name: ScannerCC
+allow_embedding: false
+name: ScannerCC
+runtime_options: {version: 2, client_version: '3', server_version: python3-sandbox,
+  server_spec: null}
+metadata: {title: 3D Scanner Control Center, description: Send control commands to Raspi photogrammetry rig}
+startup_form: null
+db_schema:
+  photo:
+    title: Photo
+    client: search
+    server: full
+    columns:
+    - name: Time Stamp
+      admin_ui: {width: 200}
+      type: string
+    - name: Thumbnail
+      admin_ui: {width: 200}
+      type: media
+    - name: URL
+      admin_ui: {width: 200}
+      type: string
+    - name: Person
+      admin_ui: {width: 200}
+      type: link_single
+      target: person
+    - name: Session
+      admin_ui: {width: 200}
+      type: number
+  person:
+    title: Person
+    client: none
+    server: full
+    columns:
+    - name: Name
+      admin_ui: {width: 200}
+      type: string
+uplink_visible: true
