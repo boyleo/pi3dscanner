@@ -162,3 +162,53 @@ sudo systemctl enable sender.service
 sudo systemctl start sender.service
 ```
 now the sender will automatically start with pi
+
+## Camera Node Installation
+
+Development device is \
+Raspi Zero W + ArduCAM IMX519 \
+RaspiOS Lite bullseye 22.04 
+
+```
+sudo apt update
+sudo apt upgrade
+sudo apt install python3-pip
+pip install pysmb
+```
+### Install ArduCAM driver
+
+If you have official cameras v1, v2 or HQ you can skip this step\
+Otherwise install IMX519 driver and libcamera apps according to this link
+
+https://www.arducam.com/docs/cameras-for-raspberry-pi/raspberry-pi-libcamera-guide/
+
+### Install full version of libcamera
+
+**If you have installed ArduCAM driver from previous step, skip this.** \
+\
+Default RaspiOS Lite comes with `libcamera-lite` \
+If you have official v1, v2, or HQ cameras, upgrade to full version of libcamera \
+\
+**Do not activate legacy camera from raspi-config** \
+\
+That is for the obsoleted raspi-still. It will conflicts with libcamera.
+```
+sudo apt install libcamera libcamera-apps
+```
+### Receiver script
+
+You may clone this repository into home folder \
+but the only needed file is `receiver.py`
+
+```
+cd /home/pi
+git clone https://github.com/boyleo/pi3dscanner.git .
+```
+
+### Set hostname
+
+You need to set hostname of a camera node differently, \
+as its name will be included in photo filename to be able to identify where each photo comes from.
+```
+sudo nano /etc/hostname
+```
